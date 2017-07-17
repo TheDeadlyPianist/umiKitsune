@@ -1,0 +1,17 @@
+{
+  "name": "Umi Kitsune",
+  "dependencies": {
+    "discord": "^0.8.2",
+    "discord.js": "^11.1.0",
+    "discord.js-commando": "^0.9.0",
+    "hash_file": "^0.1.1",
+    "jimp": "^0.2.28",
+    "jquery": "^3.2.1",
+    "request": "^2.81.0"
+  },
+  "version": "1.0",
+  "description": "Craig's discord bot",
+  "main": "index.js",
+  "author": "Duane Matthew Miles",
+  "license": "ISC"
+}
