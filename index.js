@@ -32,6 +32,7 @@ function checkImagePost(message, serverId) {
                 imageTiming.push([message.author, message.createdAt]);
                 console.log("Created initial entry.\n" + imageTiming);
             } else {
+                var found = false;
                 for(i=0; i<imageTiming.length; i++) {
                     console.log("Entry at: " + i + " Entry: " + imageTiming[i]+"\n")
                     if(imageTiming[i][0] == message.author) {
@@ -40,12 +41,14 @@ function checkImagePost(message, serverId) {
                             console.log("Not enough time has passed")
                             message.reply("it has been " + Math.floor((message.createdAt - imageTiming[i][1])/1000) + " seconds since your last image post.\nYou need to wait at least " + timer + " seconds to post another image.");
                             message.delete();
+                            found = true;
                             return;
                         } else {
                             try {
                                 console.log("Added additional item")
                                 imageTiming.splice(i, 1);
                                 imageTiming.push([message.author, message.createdAt]);
+                                found = true;
                                 return;
                             }
                             catch (err) {
@@ -53,6 +56,11 @@ function checkImagePost(message, serverId) {
                             }
                         }
                     }
+                }
+                if(!found) {
+                    console.log("Added additional item");
+                    imageTiming.push([message.author, message.createdAt]);
+                    return;
                 }
             }
         }
