@@ -32,7 +32,7 @@ function checkImagePost(message, serverId) {
                 imageTiming.push([message.author, message.createdAt]);
                 console.log("Created initial entry.\n" + imageTiming);
             } else {
-                var found = false;
+                let found = false;
                 for(i=0; i<imageTiming.length; i++) {
                     console.log("Entry at: " + i + " Entry: " + imageTiming[i]+"\n")
                     if(imageTiming[i][0] == message.author) {
