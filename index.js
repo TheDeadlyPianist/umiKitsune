@@ -10,9 +10,12 @@ umi.registry.registerGroup("debug", "Debug Commands");
 umi.registry.registerCommandsIn(__dirname + "/commands");
 
 let imageTiming = new Array();
+let serverMap = {};
 
 umi.on('message', message => {
-    checkImagePost(message);
+    checkImagePost(message, message.guild.id);
+
+    //Admin Commands to Change Settings that cannot be store as unique functions (at least for now)(limited by own experience)
 });
 
 umi.on("ready", () => {
@@ -20,8 +23,9 @@ umi.on("ready", () => {
     readFromJson();
 })
 
-function checkImagePost(message) {
-    const localPrefs = require("./preferences.json")
+function checkImagePost(message, serverId) {
+    let timer = serverMap[serverId]["picTim"];
+    console.log("Timer: " + timer);
     try {
         if(message.channel["name"] == "picture_chat" && message.author.username != "Umi Kitsune" && (message["attachments"].array().length != 0 || message["embeds"].length != 0)) {
             if(imageTiming.length == 0) {
@@ -56,8 +60,8 @@ function checkImagePost(message) {
     catch (err) {
         message.reply("There was an error with the message.");
         console.log(err);
-    }
-}
+    };
+};
 
 function readFromJson () {
     fs.readFile("./preferences.json", "utf8", (err, data) => {
@@ -66,21 +70,63 @@ function readFromJson () {
         } else {
             obj = JSON.parse(data);
             if (obj.servers.length == 0) {
-                console.log("Server list empty");
-                newEntry = disL.Client;
-                console.log("\nNew Server: " + newEntry + "\n");
+                if(umi.guilds.array().length > 0) {
+                    console.log("Server list empty. Populating with current servers.\n");
+                    createNewMaps();
+                } else {
+                    console.log("Not currently connected to a server.")
+                }
             } else {
-                
-            }
-        }
-    })
-}
+                console.log("Checking for new servers.")
+                populateMaps();
+            };
+        };
+    });
+};
 
 function writeToJson () {
+    let toJSON = {servers:[]};
+    Object.keys(serverMap).forEach((i) => {
+        let id = i;
+        toJSON["servers"].push([id, serverMap[i]]);
+    });
+    fs.writeFile("./preferences.json", JSON.stringify(toJSON), (err) => {
+        if(err) {
+            console.log(err)
+        } else {
+            console.log("\nNew JSON file has been saved.\n")
+        }
+    });
+};
 
-}
+function createNewMaps () {
+    umi.guilds.array().forEach((i) => {
+        serverMap[i.id] = {"name":i.name, "picTim":60};
+    });
+    Object.keys(serverMap).forEach((i) => {
+        console.log("Server id: " + i + "       Name: " + serverMap[i]["name"] + "        Timeout Timer: " + serverMap[i]["picTim"])
+    });
+    writeToJson();
+};
 
-function createMap () {
-    
-}
+function populateMaps () {
+    serverMaps = {};
+    fs.readFile("./preferences.json", "utf8", (err, data) => {
+        if (err) {
+            console.log("Error: " + err);
+        } else {
+            console.log("Parsing following data: " + data + "\n\n");
+            let obj = JSON.parse(data);
+            //Populate the actual Map
+            obj["servers"].forEach((i) => {
+                serverMap[i[0]] = i[1];
+            });
+            //Print keys out in console for easy debugging + just to check information
+            Object.keys(serverMap).forEach((i) => {
+                console.log("Server id: " + i + "       Name: " + serverMap[i]["name"] + "        Timeout Timer: " + serverMap[i]["picTim"])
+            });
+        };
+    });
+};
+
 umi.login("MzM2NDU5NjMxMDg4MTA3NTI1.DE4pqg.itzAIRssqArnDUYF25uKlvkXCZg");
