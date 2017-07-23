@@ -13,8 +13,12 @@ let imageTiming = new Array();
 let serverMap = {};
 
 umi.on('message', message => {
-    checkImagePost(message, message.guild.id);
-
+    try {
+        checkImagePost(message, message.guild.id);
+    }
+    catch(err) {
+        message.reply("\nThere has been an issue processing this message.\nPlease copy the following and PM it to Hydraclone: "+err);
+    }
     //Admin Commands to Change Settings that cannot be store as unique functions (at least for now)(limited by own experience)
 });
 
