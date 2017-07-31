@@ -13,8 +13,12 @@ let imageTiming = new Array();
 let serverMap = {};
 
 umi.on('message', message => {
-    checkImagePost(message, message.guild.id);
-
+    try {
+        checkImagePost(message, message.guild.id);
+    }
+    catch(err) {
+        message.reply("\nThere has been an issue processing this message.\nPlease copy the following and PM it to Hydraclone: "+err);
+    }
     //Admin Commands to Change Settings that cannot be store as unique functions (at least for now)(limited by own experience)
 });
 
@@ -32,6 +36,7 @@ function checkImagePost(message, serverId) {
                 imageTiming.push([message.author, message.createdAt]);
                 console.log("Created initial entry.\n" + imageTiming);
             } else {
+                let found = false;
                 for(i=0; i<imageTiming.length; i++) {
                     console.log("Entry at: " + i + " Entry: " + imageTiming[i]+"\n")
                     if(imageTiming[i][0] == message.author) {
@@ -40,12 +45,14 @@ function checkImagePost(message, serverId) {
                             console.log("Not enough time has passed")
                             message.reply("it has been " + Math.floor((message.createdAt - imageTiming[i][1])/1000) + " seconds since your last image post.\nYou need to wait at least " + timer + " seconds to post another image.");
                             message.delete();
+                            found = true;
                             return;
                         } else {
                             try {
                                 console.log("Added additional item")
                                 imageTiming.splice(i, 1);
                                 imageTiming.push([message.author, message.createdAt]);
+                                found = true;
                                 return;
                             }
                             catch (err) {
@@ -53,6 +60,11 @@ function checkImagePost(message, serverId) {
                             }
                         }
                     }
+                }
+                if(!found) {
+                    console.log("Added additional item");
+                    imageTiming.push([message.author, message.createdAt]);
+                    return;
                 }
             }
         }

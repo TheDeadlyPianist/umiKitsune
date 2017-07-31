@@ -9,7 +9,7 @@
     "jquery": "^3.2.1",
     "request": "^2.81.0"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Craig's discord bot",
   "main": "index.js",
   "author": "Duane Matthew Miles",
