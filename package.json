@@ -10,11 +10,7 @@
     "request": "^2.81.0",
     "self-reload-json": "^0.3.0"
   },
-<<<<<<< HEAD
-  "version": "1.0.2",
-=======
   "version": "1.1.0",
->>>>>>> spamBlock
   "description": "Craig's discord bot",
   "main": "index.js",
   "author": "Duane Matthew Miles",
