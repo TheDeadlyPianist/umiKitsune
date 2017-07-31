@@ -1,1 +1,1 @@
-{"servers":[["146730952108933120",{"name":"Ranos Streaming","picTim":60}],["334603267042574340",{"name":"SassyBot","picTim":60}]]}
+{"servers":{"146730952108933120":{"timeout":60,"userException":{},"channels":{}},"334603267042574340":{"timeout":60,"userException":{"139852073591242752":true},"channels":{"334603267042574340":true,"336488973079937025":true,"334603806866276352":true}}}}
