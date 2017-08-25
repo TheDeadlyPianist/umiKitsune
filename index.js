@@ -129,4 +129,4 @@ function writeToJson () {
 
 module.exports = {"pref":preferences};
 
-umi.login("MzM0NjE2NjgxMjk5MzEyNjYx.DIGy_g.mTP-ATsEmYY76ETael5JmpIJOls");
+umi.login("MzM2NDU5NjMxMDg4MTA3NTI1.DIHpBw.qcCeCyOKHLL-GI7NJq0Yw721Uwk");
