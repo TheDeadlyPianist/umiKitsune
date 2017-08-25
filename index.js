@@ -8,6 +8,7 @@ umi.registry.registerDefaults();
 umi.registry.registerGroup("basic", "Basic Commands");
 umi.registry.registerGroup("fun", "Fun Commands");
 umi.registry.registerGroup("debug", "Debug Commands");
+umi.registry.registerGroup("information", "Informational Commands");
 umi.registry.registerCommandsIn(__dirname + "/commands");
 
 const prefix = "!";
@@ -128,4 +129,4 @@ function writeToJson () {
 
 module.exports = {"pref":preferences};
 
-umi.login("MzM2NDU5NjMxMDg4MTA3NTI1.DE4pqg.itzAIRssqArnDUYF25uKlvkXCZg");
+umi.login("MzM0NjE2NjgxMjk5MzEyNjYx.DIGy_g.mTP-ATsEmYY76ETael5JmpIJOls");
